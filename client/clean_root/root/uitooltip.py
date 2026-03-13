@@ -57,8 +57,8 @@ def SplitDescription(desc, limit):
 ###################################################################################################
 ## ToolTip
 ##
-##	 NOTE : 현재는 Item과 Skill을 상속으로 특화 시켜두었음
-##			하지만 그다지 의미가 없어 보임
+##   NOTE : 현재는 Item과 Skill을 상속으로 특화 시켜두었음
+##          하지만 그다지 의미가 없어 보임
 ##
 class ToolTip(ui.ThinBoard):
 
@@ -312,10 +312,6 @@ class ToolTip(ui.ThinBoard):
 		self.SetPosition(x, y)
 
 class ItemToolTip(ToolTip):
-	if app.ENABLE_SEND_TARGET_INFO:
-		isStone = False
-		isBook = False
-		isBook2 = False
 
 	CHARACTER_NAMES = ( 
 		localeInfo.TOOLTIP_WARRIOR,
@@ -764,15 +760,7 @@ class ItemToolTip(ToolTip):
 		self.SetTitle(itemName)
 
 	def __SetNormalItemTitle(self):
-		if app.ENABLE_SEND_TARGET_INFO:
-			if self.isStone:
-				itemName = item.GetItemName()
-				realName = itemName[:itemName.find("+")]
-				self.SetTitle(realName + " +0 - +4")
-			else:
-				self.SetTitle(item.GetItemName())
-		else:
-			self.SetTitle(item.GetItemName())
+		self.SetTitle(item.GetItemName())
 
 	def __SetSpecialItemTitle(self):
 		self.AppendTextLine(item.GetItemName(), self.SPECIAL_TITLE_COLOR)
@@ -840,56 +828,28 @@ class ItemToolTip(ToolTip):
 			return
 
 		### Skill Book ###
-		if app.ENABLE_SEND_TARGET_INFO:
-			if 50300 == itemVnum and not self.isBook:
-				if 0 != metinSlot and not self.isBook:
-					self.__SetSkillBookToolTip(metinSlot[0], localeInfo.TOOLTIP_SKILLBOOK_NAME, 1)
-					self.ShowToolTip()
-				elif self.isBook:
-					self.SetTitle(item.GetItemName())
-					self.AppendDescription(item.GetItemDescription(), 26)
-					self.AppendDescription(item.GetItemSummary(), 26, self.CONDITION_COLOR)
-					self.ShowToolTip()					
-				return
-			elif 70037 == itemVnum :
-				if 0 != metinSlot and not self.isBook2:
-					self.__SetSkillBookToolTip(metinSlot[0], localeInfo.TOOLTIP_SKILL_FORGET_BOOK_NAME, 0)
-					self.AppendDescription(item.GetItemDescription(), 26)
-					self.AppendDescription(item.GetItemSummary(), 26, self.CONDITION_COLOR)
-					self.ShowToolTip()
-				elif self.isBook2:
-					self.SetTitle(item.GetItemName())
-					self.AppendDescription(item.GetItemDescription(), 26)
-					self.AppendDescription(item.GetItemSummary(), 26, self.CONDITION_COLOR)
-					self.ShowToolTip()					
-				return
-			elif 70055 == itemVnum:
-				if 0 != metinSlot:
-					self.__SetSkillBookToolTip(metinSlot[0], localeInfo.TOOLTIP_SKILL_FORGET_BOOK_NAME, 0)
-					self.AppendDescription(item.GetItemDescription(), 26)
-					self.AppendDescription(item.GetItemSummary(), 26, self.CONDITION_COLOR)
-					self.ShowToolTip()
-				return
-		else:
-			if 50300 == itemVnum:
-				if 0 != metinSlot:
-					self.__SetSkillBookToolTip(metinSlot[0], localeInfo.TOOLTIP_SKILLBOOK_NAME, 1)
-					self.ShowToolTip()
-				return
-			elif 70037 == itemVnum:
-				if 0 != metinSlot:
-					self.__SetSkillBookToolTip(metinSlot[0], localeInfo.TOOLTIP_SKILL_FORGET_BOOK_NAME, 0)
-					self.AppendDescription(item.GetItemDescription(), 26)
-					self.AppendDescription(item.GetItemSummary(), 26, self.CONDITION_COLOR)
-					self.ShowToolTip()
-				return
-			elif 70055 == itemVnum:
-				if 0 != metinSlot:
-					self.__SetSkillBookToolTip(metinSlot[0], localeInfo.TOOLTIP_SKILL_FORGET_BOOK_NAME, 0)
-					self.AppendDescription(item.GetItemDescription(), 26)
-					self.AppendDescription(item.GetItemSummary(), 26, self.CONDITION_COLOR)
-					self.ShowToolTip()
-				return
+		elif 50300 == itemVnum:
+			if 0 != metinSlot:
+				self.__SetSkillBookToolTip(metinSlot[0], localeInfo.TOOLTIP_SKILLBOOK_NAME, 1)
+
+				self.ShowToolTip()
+			return 
+		elif 70037 == itemVnum:
+			if 0 != metinSlot:
+				self.__SetSkillBookToolTip(metinSlot[0], localeInfo.TOOLTIP_SKILL_FORGET_BOOK_NAME, 0)
+				self.AppendDescription(item.GetItemDescription(), 26)
+				self.AppendDescription(item.GetItemSummary(), 26, self.CONDITION_COLOR)
+
+				self.ShowToolTip()
+			return
+		elif 70055 == itemVnum:
+			if 0 != metinSlot:
+				self.__SetSkillBookToolTip(metinSlot[0], localeInfo.TOOLTIP_SKILL_FORGET_BOOK_NAME, 0)
+				self.AppendDescription(item.GetItemDescription(), 26)
+				self.AppendDescription(item.GetItemSummary(), 26, self.CONDITION_COLOR)
+
+				self.ShowToolTip()
+			return
 		###########################################################################################
 
 
@@ -1191,7 +1151,7 @@ class ItemToolTip(ToolTip):
 					self.AppendTextLine(localeInfo.TOOLTIP_TIME_CHARGER_PER(metinSlot[2]))
 				else:
 					self.AppendTextLine(localeInfo.TOOLTIP_TIME_CHARGER_PER(item.GetValue(0)))
-		
+ 		
 				## 있다면 관련 정보를 표시함. ex) 남은 시간 : 6일 6시간 58분 
 				if 1 == bHasRealtimeFlag:
 					self.AppendMallItemLastTime(metinSlot[0])
@@ -1531,11 +1491,11 @@ class ItemToolTip(ToolTip):
 						
 	def AppendPrice(self, price):	
 		self.AppendSpace(5)
-		self.AppendTextLine(localeInfo.TOOLTIP_BUYPRICE	 % (localeInfo.NumberToMoneyString(price)), self.GetPriceColor(price))
+		self.AppendTextLine(localeInfo.TOOLTIP_BUYPRICE  % (localeInfo.NumberToMoneyString(price)), self.GetPriceColor(price))
 		
 	def AppendPriceBySecondaryCoin(self, price):
 		self.AppendSpace(5)
-		self.AppendTextLine(localeInfo.TOOLTIP_BUYPRICE	 % (localeInfo.NumberToSecondaryCoinString(price)), self.GetPriceColor(price))
+		self.AppendTextLine(localeInfo.TOOLTIP_BUYPRICE  % (localeInfo.NumberToSecondaryCoinString(price)), self.GetPriceColor(price))
 
 	def AppendSellingPrice(self, price):
 		if item.IsAntiFlag(item.ITEM_ANTIFLAG_SELL):			
@@ -1579,7 +1539,7 @@ class ItemToolTip(ToolTip):
 			flag = flagList[i]
 
 			if flag:
-				wearNames += "	"
+				wearNames += "  "
 				wearNames += name
 
 		textLine = ui.TextLine()
@@ -1875,12 +1835,12 @@ class SkillToolTip(ToolTip):
 	SKILL_TOOL_TIP_WIDTH = 200
 	PARTY_SKILL_TOOL_TIP_WIDTH = 340
 
-	PARTY_SKILL_EXPERIENCE_AFFECT_LIST = (	( 2, 2,	 10,),
-											( 8, 3,	 20,),
-											(14, 4,	 30,),
-											(22, 5,	 45,),
-											(28, 6,	 60,),
-											(34, 7,	 80,),
+	PARTY_SKILL_EXPERIENCE_AFFECT_LIST = (	( 2, 2,  10,),
+											( 8, 3,  20,),
+											(14, 4,  30,),
+											(22, 5,  45,),
+											(28, 6,  60,),
+											(34, 7,  80,),
 											(38, 8, 100,), )
 
 	PARTY_SKILL_PLUS_GRADE_AFFECT_LIST = (	( 4, 2, 1, 0,),
@@ -2332,8 +2292,8 @@ class SkillToolTip(ToolTip):
 			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_ATTACKER % chop( 10 + 60 * k ))
 
 		if skillLevel>=20:
-			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_BERSERKER	% chop(1 + 5 * k))
-			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_TANKER	% chop(50 + 1450 * k))
+			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_BERSERKER 	% chop(1 + 5 * k))
+			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_TANKER 	% chop(50 + 1450 * k))
 
 		if skillLevel>=25:
 			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_BUFFER % chop(5 + 45 * k ))

@@ -1,6 +1,4 @@
 # option
-import app
-
 IN_GAME_SHOP_ENABLE = 1
 CONSOLE_ENABLE = 0
 
@@ -240,5 +238,3 @@ def IS_AUTO_POTION_SP(itemVnum):
 				
 	return 0
 
-if app.ENABLE_SEND_TARGET_INFO:
-	MONSTER_INFO_DATA = {}

@@ -1471,7 +1471,7 @@ class GameWindow(ui.ScriptWindow):
 		nFaceCount = app.GetFaceCount()
 		fFaceSpeed = app.GetFaceSpeed()
 		nST=background.GetRenderShadowTime()
-		(fAveRT, nCurRT) =	app.GetRenderTime()
+		(fAveRT, nCurRT) =  app.GetRenderTime()
 		(iNum, fFogStart, fFogEnd, fFarCilp) = background.GetDistanceSetInfo()
 		(iPatch, iSplat, fSplatRatio, sTextureNum) = background.GetRenderedSplatNum()
 		if iPatch == 0:
@@ -1582,47 +1582,7 @@ class GameWindow(ui.ScriptWindow):
 		if self.affectShower:
 			self.affectShower.OnUpdateLovePoint(lovePoint)
 	# END_OF_WEDDING
-
-	if app.ENABLE_SEND_TARGET_INFO:
-			def BINARY_AddTargetMonsterDropInfo(self, raceNum, itemVnum, itemCount):
-				if not raceNum in constInfo.MONSTER_INFO_DATA:
-					constInfo.MONSTER_INFO_DATA.update({raceNum : {}})
-					constInfo.MONSTER_INFO_DATA[raceNum].update({"items" : []})
-				curList = constInfo.MONSTER_INFO_DATA[raceNum]["items"]
-
-				isUpgradeable = False
-				isMetin = False
-				item.SelectItem(itemVnum)
-				if item.GetItemType() == item.ITEM_TYPE_WEAPON or item.GetItemType() == item.ITEM_TYPE_ARMOR:
-					isUpgradeable = True
-				elif item.GetItemType() == item.ITEM_TYPE_METIN:
-					isMetin = True
-
-				for curItem in curList:
-					if isUpgradeable:
-						if curItem.has_key("vnum_list") and curItem["vnum_list"][0] / 10 * 10 == itemVnum / 10 * 10:
-							if not (itemVnum in curItem["vnum_list"]):
-								curItem["vnum_list"].append(itemVnum)
-							return
-					elif isMetin:
-						if curItem.has_key("vnum_list"):
-							baseVnum = curItem["vnum_list"][0]
-						if curItem.has_key("vnum_list") and (baseVnum - baseVnum%1000) == (itemVnum - itemVnum%1000):
-							if not (itemVnum in curItem["vnum_list"]):
-								curItem["vnum_list"].append(itemVnum)
-							return
-					else:
-						if curItem.has_key("vnum") and curItem["vnum"] == itemVnum and curItem["count"] == itemCount:
-							return
-
-				if isUpgradeable or isMetin:
-					curList.append({"vnum_list":[itemVnum], "count":itemCount})
-				else:
-					curList.append({"vnum":itemVnum, "count":itemCount})
-
-			def BINARY_RefreshTargetMonsterDropInfo(self, raceNum):
-				self.targetBoard.RefreshMonsterInfoBoard()
-
+	
 	# QUEST_CONFIRM
 	def BINARY_OnQuestConfirm(self, msg, timeout, pid):
 		confirmDialog = uiCommon.QuestionDialogWithTimeLimit()
@@ -1630,9 +1590,9 @@ class GameWindow(ui.ScriptWindow):
 		confirmDialog.SetAcceptEvent(lambda answer=True, pid=pid: net.SendQuestConfirmPacket(answer, pid) or self.confirmDialog.Hide())
 		confirmDialog.SetCancelEvent(lambda answer=False, pid=pid: net.SendQuestConfirmPacket(answer, pid) or self.confirmDialog.Hide())
 		self.confirmDialog = confirmDialog
-	# END_OF_QUEST_CONFIRM
+    # END_OF_QUEST_CONFIRM
 
-	# GIFT command
+    # GIFT command
 	def Gift_Show(self):
 		self.interface.ShowGift()
 
@@ -1681,7 +1641,7 @@ class GameWindow(ui.ScriptWindow):
 		pass
 
 	def BINARY_Cube_ResultList(self, npcVNUM, listText):
-		# ResultList Text Format : 72723,1/72725,1/72730.1/50001,5	이런식으로 "/" 문자로 구분된 리스트를 줌
+		# ResultList Text Format : 72723,1/72725,1/72730.1/50001,5  이런식으로 "/" 문자로 구분된 리스트를 줌
 		#print listText
 		
 		if npcVNUM == 0:
