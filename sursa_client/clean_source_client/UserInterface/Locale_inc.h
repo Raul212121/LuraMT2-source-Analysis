@@ -1,0 +1,14 @@
+#define LOCALE_SERVICE_SINGAPORE			// ½Ì°¡Æú
+#define ENABLE_COSTUME_SYSTEM
+#define ENABLE_ENERGY_SYSTEM
+#define ENABLE_DRAGON_SOUL_SYSTEM
+#define ENABLE_NEW_EQUIPMENT_SYSTEM
+#define ENABLE_EXTRA_LOGIN_SECURITY_KEY
+#ifdef ENABLE_EXTRA_LOGIN_SECURITY_KEY
+	#define EXTRA_LOGIN_SECURITY_KEY "460cZ71kqi6z"
+#endif
+//__________________LuraGamesSystems___________________________
+#define ENABLE_SEND_TARGET_INFO
+
+
+//__________________LuraGamesSystems___________________________
