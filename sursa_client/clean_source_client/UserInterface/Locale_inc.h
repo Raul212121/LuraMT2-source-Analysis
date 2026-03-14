@@ -7,8 +7,3 @@
 #ifdef ENABLE_EXTRA_LOGIN_SECURITY_KEY
 	#define EXTRA_LOGIN_SECURITY_KEY "460cZ71kqi6z"
 #endif
-//__________________LuraGamesSystems___________________________
-#define ENABLE_SEND_TARGET_INFO
-
-
-//__________________LuraGamesSystems___________________________

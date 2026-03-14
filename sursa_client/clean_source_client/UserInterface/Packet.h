@@ -224,10 +224,7 @@ enum
 
 	HEADER_GC_SCRIPT							= 45,
     HEADER_GC_QUEST_CONFIRM                     = 46,
-#ifdef ENABLE_SEND_TARGET_INFO
-	HEADER_GC_TARGET_INFO = 58,
-	HEADER_CG_TARGET_INFO_LOAD = 59,
-#endif
+
 	HEADER_GC_MOUNT								= 61,
 	HEADER_GC_OWNERSHIP                         = 62, 
     HEADER_GC_TARGET                            = 63,
@@ -1945,23 +1942,6 @@ typedef struct packet_target
     DWORD       dwVID;
     BYTE        bHPPercent;
 } TPacketGCTarget;
-
-#ifdef ENABLE_SEND_TARGET_INFO
-typedef struct packet_target_info
-{
-	BYTE	header;
-	DWORD	dwVID;
-	DWORD	race;
-	DWORD	dwVnum;
-	BYTE	count;
-} TPacketGCTargetInfo;
-
-typedef struct packet_target_info_load
-{
-	BYTE header;
-	DWORD dwVID;
-} TPacketCGTargetInfoLoad;
-#endif
 
 typedef struct packet_damage_info
 {
