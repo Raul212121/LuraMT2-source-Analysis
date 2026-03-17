@@ -1,0 +1,7 @@
+BIOLOG_MANAGER_TITLE	Biolog Manager
+BIOLOG_MANAGER_REQUIRED_LEVEL	The biologist's current mission:
+BIOLOG_MANAGER_REQUIRED_ITEM_TITLE	Research item by a biologist:
+BIOLOG_MANAGER_BUTTON_ACCEPT	Submit Item
+BIOLOG_MANAGER_TIME_TEXT	You can submit the next item!
+BIOLOG_MANAGER_TIME_WAIT	Wait:
+BIOLOG_MANAGER_ALERT	You can return item for research!
