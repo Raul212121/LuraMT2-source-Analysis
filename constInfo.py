@@ -1,0 +1,2 @@
+#1.0 Add:
+IS_BONUS_CHANGER = FALSE
